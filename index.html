@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>팀 편성 프로그램</title>
+    <title>⚡ CHAMSCODE - 팀 편성 시스템</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
+        
         * {
             margin: 0;
             padding: 0;
@@ -12,37 +14,45 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0a0e27 100%);
             min-height: 100vh;
-            padding: 20px;
-            max-height: 100vh;
+            color: #fff;
             overflow: hidden;
         }
 
         .container {
-            max-width: 1400px;
-            max-height: 1040px;
-            margin: 0 auto;
+            max-width: 100vw;
+            max-height: 100vh;
+            height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
+            padding: 15px;
+            gap: 15px;
         }
 
         .header {
             text-align: center;
-            color: white;
-            margin-bottom: 15px;
+            padding: 15px;
+            background: linear-gradient(135deg, rgba(255,107,0,0.2) 0%, rgba(255,0,128,0.2) 100%);
+            border: 2px solid rgba(255,107,0,0.5);
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(255,107,0,0.3);
         }
 
         .header h1 {
-            font-size: 2em;
-            margin-bottom: 5px;
+            font-size: 2.5em;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff6b00 0%, #ff0080 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255,107,0,0.5);
+            letter-spacing: 3px;
         }
 
         .main-layout {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             flex: 1;
             overflow: hidden;
         }
@@ -53,79 +63,93 @@
             flex-direction: column;
             gap: 15px;
             overflow-y: auto;
-            padding-right: 10px;
         }
 
         .right-sidebar {
-            width: 320px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 350px;
+            background: rgba(26, 31, 58, 0.8);
+            border: 2px solid rgba(0, 150, 255, 0.3);
+            border-radius: 10px;
             padding: 20px;
             overflow-y: auto;
+            box-shadow: 0 0 20px rgba(0, 150, 255, 0.2);
         }
 
         .controls {
-            background: white;
+            background: rgba(26, 31, 58, 0.8);
             padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border-radius: 10px;
+            border: 2px solid rgba(0, 150, 255, 0.3);
         }
 
         .action-buttons {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 10px;
-            flex-wrap: wrap;
         }
 
         .btn {
-            flex: 1;
-            min-width: 150px;
-            padding: 12px 24px;
+            padding: 15px 25px;
             border: none;
             border-radius: 8px;
             font-size: 16px;
-            font-weight: bold;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
         }
 
         .btn-balanced {
-            background: #ed8936;
-            color: white;
+            background: linear-gradient(135deg, #ff6b00 0%, #ff8800 100%);
+            box-shadow: 0 5px 15px rgba(255,107,0,0.4);
         }
 
         .btn-spectator {
-            background: #805ad5;
-            color: white;
+            background: linear-gradient(135deg, #9c27b0 0%, #e040fb 100%);
+            box-shadow: 0 5px 15px rgba(156,39,176,0.4);
         }
 
         .btn-auction {
-            background: #d53f8c;
-            color: white;
+            background: linear-gradient(135deg, #f50057 0%, #ff4081 100%);
+            box-shadow: 0 5px 15px rgba(245,0,87,0.4);
         }
 
         .btn-secondary {
-            background: #f56565;
-            color: white;
+            background: linear-gradient(135deg, #455a64 0%, #607d8b 100%);
+            box-shadow: 0 5px 15px rgba(69,90,100,0.4);
         }
 
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
-        .btn:disabled {
-            background: #cbd5e0;
-            cursor: not-allowed;
-            transform: none;
+            transform: translateY(-3px);
+            filter: brightness(1.2);
         }
 
         .teams-container {
-            background: rgba(255,255,255,0.95);
+            background: rgba(26, 31, 58, 0.8);
             padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border-radius: 10px;
+            border: 2px solid rgba(0, 150, 255, 0.3);
             flex: 1;
             overflow-y: auto;
         }
@@ -134,42 +158,55 @@
             display: grid;
             grid-template-columns: 1fr auto 1fr;
             gap: 25px;
-            align-items: start;
             margin-bottom: 25px;
         }
 
         .team {
-            background: #2d3748;
-            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(0,0,0,0.5) 0%, rgba(26,31,58,0.8) 100%);
+            border-radius: 10px;
             padding: 20px;
+            border: 2px solid;
+        }
+
+        .team.team1 {
+            border-color: rgba(33, 150, 243, 0.6);
+            box-shadow: 0 0 20px rgba(33, 150, 243, 0.3);
+        }
+
+        .team.team2 {
+            border-color: rgba(244, 67, 54, 0.6);
+            box-shadow: 0 0 20px rgba(244, 67, 54, 0.3);
         }
 
         .team-header {
-            color: white;
             font-size: 1.5em;
-            font-weight: bold;
-            margin-bottom: 10px;
+            font-weight: 900;
+            margin-bottom: 15px;
             padding-bottom: 10px;
-            border-bottom: 3px solid #4a5568;
+            border-bottom: 2px solid;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            text-transform: uppercase;
+        }
+
+        .team1 .team-header {
+            border-color: rgba(33, 150, 243, 0.6);
+            color: #2196f3;
+            text-shadow: 0 0 10px rgba(33, 150, 243, 0.5);
+        }
+
+        .team2 .team-header {
+            border-color: rgba(244, 67, 54, 0.6);
+            color: #f44336;
+            text-shadow: 0 0 10px rgba(244, 67, 54, 0.5);
         }
 
         .team-score {
-            font-size: 0.7em;
-            background: rgba(255,255,255,0.2);
-            padding: 5px 10px;
-            border-radius: 15px;
-        }
-
-        .team-points {
             font-size: 0.6em;
-            background: #d53f8c;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 15px;
-            margin-left: 10px;
+            background: rgba(255,255,255,0.1);
+            padding: 5px 15px;
+            border-radius: 20px;
         }
 
         .team-slots {
@@ -179,58 +216,58 @@
         }
 
         .team-slot {
-            background: #4a5568;
+            background: rgba(0,0,0,0.3);
             padding: 15px;
             border-radius: 8px;
-            min-height: 50px;
-            color: #a0aec0;
-            font-style: italic;
+            min-height: 60px;
+            border: 2px dashed rgba(255,255,255,0.2);
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s;
-            position: relative;
         }
 
         .team-slot.drag-over {
-            background: #667eea;
-            border: 2px dashed white;
-            transform: scale(1.02);
+            background: rgba(255,107,0,0.3);
+            border-color: #ff6b00;
+            transform: scale(1.05);
         }
 
         .team-slot.empty::after {
-            content: '비어 있음';
-            color: #a0aec0;
-            font-style: italic;
+            content: '빈 자리';
+            color: rgba(255,255,255,0.3);
+            font-weight: 700;
+            letter-spacing: 2px;
         }
 
         .player-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, rgba(255,107,0,0.8) 0%, rgba(255,0,128,0.8) 100%);
             color: white;
             padding: 15px;
             border-radius: 8px;
             cursor: move;
-            font-weight: bold;
+            font-weight: 700;
             text-align: center;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 15px rgba(255,107,0,0.5);
             transition: all 0.3s;
             user-select: none;
             width: 100%;
+            border: 2px solid rgba(255,255,255,0.3);
         }
 
         .player-card:hover {
             transform: scale(1.05);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 25px rgba(255,107,0,0.7);
         }
 
         .player-card.dragging {
-            opacity: 0.3;
+            opacity: 0.5;
         }
 
         .player-card .tier-label {
             font-size: 0.8em;
-            background: rgba(255,255,255,0.3);
-            padding: 2px 8px;
+            background: rgba(0,0,0,0.5);
+            padding: 3px 10px;
             border-radius: 10px;
             display: inline-block;
             margin-top: 5px;
@@ -238,7 +275,7 @@
 
         .player-card .role-label {
             font-size: 0.7em;
-            background: rgba(255,255,255,0.5);
+            background: rgba(0,0,0,0.3);
             padding: 2px 6px;
             border-radius: 8px;
             display: inline-block;
@@ -246,305 +283,96 @@
         }
 
         .vs-divider {
-            font-size: 3em;
-            font-weight: bold;
-            color: #2d3748;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            font-size: 4em;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff6b00 0%, #ff0080 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
+            justify-content: center;
         }
 
         .score-diff {
-            font-size: 0.4em;
-            background: #edf2f7;
-            padding: 10px 15px;
-            border-radius: 10px;
-            color: #2d3748;
+            font-size: 0.3em;
+            background: rgba(255,255,255,0.1);
+            padding: 10px 20px;
+            border-radius: 20px;
+            color: #fff;
         }
 
         .score-diff.balanced {
-            background: #c6f6d5;
-            color: #22543d;
+            background: linear-gradient(135deg, #4caf50 0%, #8bc34a 100%);
         }
 
         .spectators {
-            background: #2d3748;
-            border-radius: 12px;
+            background: linear-gradient(135deg, rgba(0,0,0,0.5) 0%, rgba(26,31,58,0.8) 100%);
+            border-radius: 10px;
             padding: 20px;
+            border: 2px solid rgba(156, 39, 176, 0.6);
+            box-shadow: 0 0 20px rgba(156, 39, 176, 0.3);
         }
 
         .spectators-header {
-            color: white;
             font-size: 1.3em;
-            font-weight: bold;
+            font-weight: 900;
             margin-bottom: 15px;
+            color: #e040fb;
+            text-shadow: 0 0 10px rgba(224, 64, 251, 0.5);
+            text-transform: uppercase;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-        }
-
-        .spectator-count {
-            font-size: 0.7em;
-            background: rgba(255,255,255,0.2);
-            padding: 5px 10px;
-            border-radius: 15px;
         }
 
         .spectators-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             gap: 10px;
-            min-height: 60px;
-        }
-
-        .spectators-grid.drag-over {
-            background: rgba(102, 126, 234, 0.2);
-            border: 2px dashed rgba(102, 126, 234, 0.5);
-            border-radius: 8px;
+            min-height: 80px;
         }
 
         .spectators-grid.empty::after {
-            content: '관전자 없음 (아래에서 선택)';
-            color: #a0aec0;
-            font-style: italic;
+            content: '관전자 없음';
+            color: rgba(255,255,255,0.3);
+            font-weight: 700;
+            letter-spacing: 2px;
+            grid-column: 1 / -1;
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 60px;
+        }
+        
+        .spectators-grid {
+            max-height: 200px;
+            overflow-y: auto;
         }
 
         .spectator-card {
-            background: linear-gradient(135deg, #805ad5 0%, #6b46c1 100%);
+            background: linear-gradient(135deg, rgba(156,39,176,0.8) 0%, rgba(224,64,251,0.8) 100%);
             color: white;
-            padding: 15px;
+            padding: 12px;
             border-radius: 8px;
             cursor: move;
-            font-weight: bold;
+            font-weight: 700;
             text-align: center;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 15px rgba(156,39,176,0.5);
             transition: all 0.3s;
-            user-select: none;
+            border: 2px solid rgba(255,255,255,0.3);
             position: relative;
         }
 
         .spectator-card:hover {
             transform: scale(1.05);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
-        }
-
-        .spectator-card.dragging {
-            opacity: 0.3;
-        }
-
-        .spectator-card .tier-label {
-            font-size: 0.8em;
-            background: rgba(255,255,255,0.3);
-            padding: 2px 8px;
-            border-radius: 10px;
-            display: inline-block;
-            margin-top: 5px;
-        }
-
-        .spectator-card .role-label {
-            font-size: 0.7em;
-            background: rgba(255,255,255,0.5);
-            padding: 2px 6px;
-            border-radius: 8px;
-            display: inline-block;
-            margin-top: 3px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .spectator-card .role-label:hover {
-            background: rgba(255,255,255,0.7);
-            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(156,39,176,0.7);
         }
 
         .spectator-card .remove-spectator-btn {
             position: absolute;
             top: 5px;
             right: 5px;
-            background: rgba(239, 68, 68, 0.8);
-            border: none;
-            color: white;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            z-index: 10;
-        }
-
-        .spectator-card .remove-spectator-btn:hover {
-            background: #dc2626;
-            transform: scale(1.1);
-        }
-
-        .player-list-container {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .template-section {
-            background: #f0f4ff;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-        }
-
-        .template-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .template-buttons {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .template-btn {
-            padding: 8px 16px;
-            border: 2px solid #667eea;
-            background: white;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
-            transition: all 0.3s;
-            position: relative;
-        }
-
-        .template-btn:hover {
-            background: #667eea;
-            color: white;
-        }
-
-        .template-btn.active {
-            background: #667eea;
-            color: white;
-        }
-
-        .template-actions {
-            display: flex;
-            gap: 8px;
-        }
-
-        .template-action-btn {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-
-        .template-action-btn.save {
-            background: #48bb78;
-            color: white;
-        }
-
-        .template-action-btn.rename {
-            background: #ed8936;
-            color: white;
-        }
-
-        .template-action-btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .player-input-section {
-            background: #f7fafc;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-        }
-
-        .player-input-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .sidebar-section-title {
-            font-size: 16px;
-            font-weight: bold;
-            color: #2d3748;
-            margin-bottom: 12px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #e2e8f0;
-        }
-
-        .saved-players {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-
-        .saved-player-tag {
-            background: #667eea;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s;
-            user-select: none;
-        }
-
-        .saved-player-tag.selectable {
-            cursor: pointer;
-        }
-
-        .saved-player-tag.selectable:hover {
-            background: #5568d3;
-            transform: scale(1.05);
-        }
-
-        .saved-player-tag.in-spectator {
-            background: #805ad5;
-            cursor: default;
-        }
-
-        .saved-player-tag.in-team {
-            background: #718096;
-            opacity: 0.7;
-            cursor: default;
-        }
-
-        .saved-player-tag .tier-badge {
-            background: rgba(255,255,255,0.3);
-            padding: 2px 6px;
-            border-radius: 10px;
-            font-size: 11px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .saved-player-tag .tier-badge:hover {
-            background: rgba(255,255,255,0.5);
-            transform: scale(1.1);
-        }
-
-        .saved-player-tag .remove-btn {
-            background: rgba(255,255,255,0.3);
+            background: rgba(244,67,54,0.9);
             border: none;
             color: white;
             width: 20px;
@@ -558,68 +386,390 @@
             transition: all 0.3s;
         }
 
-        .saved-player-tag .remove-btn:hover {
-            background: rgba(255,255,255,0.5);
+        .sidebar-section-title {
+            font-size: 16px;
+            font-weight: 900;
+            color: #00d4ff;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(0, 212, 255, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
         }
 
-        .add-player-section {
-            display: grid;
-            gap: 10px;
-            margin-bottom: 10px;
+        .saved-players {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .saved-player-tag {
+            background: linear-gradient(135deg, rgba(0,150,255,0.6) 0%, rgba(0,212,255,0.6) 100%);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 15px;
+            font-size: 13px;
+            font-weight: 700;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .saved-player-tag:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,150,255,0.5);
+        }
+
+        .saved-player-tag.in-spectator {
+            background: linear-gradient(135deg, rgba(156,39,176,0.6) 0%, rgba(224,64,251,0.6) 100%);
+        }
+
+        .saved-player-tag.in-team {
+            background: rgba(100,100,100,0.5);
+            cursor: default;
         }
 
         .input-row {
             display: flex;
             gap: 10px;
-            align-items: center;
+            margin-bottom: 15px;
         }
 
         .player-name-input {
             flex: 1;
-            padding: 10px;
-            border: 2px solid #ddd;
+            padding: 12px;
+            background: rgba(0,0,0,0.5);
+            border: 2px solid rgba(0,150,255,0.5);
             border-radius: 8px;
+            color: #fff;
             font-size: 14px;
+            font-weight: 700;
+        }
+
+        .player-name-input:focus {
+            outline: none;
+            border-color: #00d4ff;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
         }
 
         .tier-input {
             width: 70px;
-            padding: 10px;
-            border: 2px solid #ddd;
+            padding: 12px;
+            background: rgba(0,0,0,0.5);
+            border: 2px solid rgba(255,107,0,0.5);
             border-radius: 8px;
+            color: #fff;
             font-size: 14px;
+            font-weight: 700;
             text-align: center;
         }
 
-        .tier-input-label {
-            font-size: 14px;
-            color: #666;
-            white-space: nowrap;
-        }
-
         .add-player-btn {
-            padding: 10px 20px;
-            background: #48bb78;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #4caf50 0%, #8bc34a 100%);
             color: white;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            font-weight: bold;
+            font-weight: 700;
             transition: all 0.3s;
         }
 
         .add-player-btn:hover {
-            background: #38a169;
-            transform: translateY(-2px);
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.5);
         }
 
-        .info-message {
-            background: #edf2f7;
-            padding: 12px;
+        .template-section {
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
             border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0,150,255,0.3);
+        }
+
+        .template-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
             margin-top: 10px;
+        }
+
+        .template-btn {
+            padding: 8px 12px;
+            background: rgba(0,0,0,0.5);
+            border: 2px solid rgba(0,150,255,0.5);
+            border-radius: 6px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+
+        .template-btn.active {
+            background: linear-gradient(135deg, #0096ff 0%, #00d4ff 100%);
+            border-color: #00d4ff;
+        }
+
+        /* 오버워치 스타일 경매 모달 */
+        .auction-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .auction-modal.active {
+            display: flex;
+        }
+
+        .auction-content {
+            width: 90%;
+            max-width: 1200px;
+            max-height: 90vh;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            border: 3px solid #ff6b00;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 0 50px rgba(255,107,0,0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .auction-player {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(255,107,0,0.3) 0%, rgba(255,0,128,0.3) 100%);
+            border-radius: 10px;
+            border: 2px solid rgba(255,107,0,0.5);
+        }
+
+        .auction-player-name {
+            font-size: 3em;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff6b00 0%, #ff0080 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255,107,0,0.5);
+            margin-bottom: 10px;
+        }
+
+        .auction-timer {
+            text-align: center;
+            font-size: 4em;
+            font-weight: 900;
+            color: #00d4ff;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.8);
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .auction-timer.warning {
+            color: #f44336;
+            text-shadow: 0 0 20px rgba(244, 67, 54, 0.8);
+        }
+
+        .auction-battle {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .auction-team-side {
+            background: rgba(0,0,0,0.5);
+            padding: 25px;
+            border-radius: 10px;
+            border: 2px solid;
+            transition: all 0.5s;
+        }
+
+        .auction-team-side.team1-side {
+            border-color: rgba(33, 150, 243, 0.6);
+        }
+
+        .auction-team-side.team2-side {
+            border-color: rgba(244, 67, 54, 0.6);
+        }
+
+        .auction-team-side.winner {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px currentColor;
+            animation: winnerPulse 0.5s;
+        }
+
+        @keyframes winnerPulse {
+            0%, 100% { transform: scale(1.05); }
+            50% { transform: scale(1.1); }
+        }
+
+        .auction-team-captain {
+            font-size: 1.2em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            opacity: 0.8;
+        }
+
+        .auction-team-members {
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            opacity: 0.7;
+            max-height: 80px;
+            overflow-y: auto;
+        }
+
+        .auction-points-config {
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .auction-points-inputs {
+            display: flex;
+            gap: 15px;
+        }
+
+        .auction-points-input-group {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .auction-points-input-group label {
+            font-weight: 700;
+            color: #00d4ff;
+        }
+
+        .auction-points-input-group input {
+            flex: 1;
+            padding: 8px;
+            background: rgba(0,0,0,0.5);
+            border: 2px solid rgba(0,150,255,0.5);
+            border-radius: 6px;
+            color: #fff;
             font-size: 14px;
-            color: #4a5568;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .auction-team-name {
+            font-size: 1.8em;
+            font-weight: 900;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .team1-side .auction-team-name {
+            color: #2196f3;
+            text-shadow: 0 0 15px rgba(33, 150, 243, 0.8);
+        }
+
+        .team2-side .auction-team-name {
+            color: #f44336;
+            text-shadow: 0 0 15px rgba(244, 67, 54, 0.8);
+        }
+
+        .auction-bid-input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(0,0,0,0.5);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1.5em;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .auction-bid-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #ff6b00 0%, #ff0080 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .auction-bid-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(255,107,0,0.7);
+        }
+
+        .auction-vs {
+            font-size: 5em;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff6b00 0%, #ff0080 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .auction-controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .auction-control-btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .auction-pass-btn {
+            background: linear-gradient(135deg, #607d8b 0%, #90a4ae 100%);
+            color: white;
+        }
+
+        .auction-next-btn {
+            background: linear-gradient(135deg, #4caf50 0%, #8bc34a 100%);
+            color: white;
+        }
+
+        .auction-close-btn {
+            background: linear-gradient(135deg, #f44336 0%, #e91e63 100%);
+            color: white;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #ff6b00 0%, #ff0080 100%);
+            border-radius: 10px;
         }
 
         .modal {
@@ -629,8 +779,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
+            background: rgba(0,0,0,0.9);
+            z-index: 999;
             align-items: center;
             justify-content: center;
         }
@@ -640,27 +790,29 @@
         }
 
         .modal-content {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            max-width: 300px;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            padding: 30px;
+            border-radius: 10px;
+            border: 2px solid #ff6b00;
+            max-width: 400px;
             width: 90%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
 
         .modal-title {
-            font-size: 1.2em;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #2d3748;
+            font-size: 1.5em;
+            font-weight: 900;
+            color: #ff6b00;
             text-align: center;
+            margin-bottom: 20px;
         }
 
         .modal-input {
             width: 100%;
-            padding: 12px;
-            border: 2px solid #667eea;
+            padding: 15px;
+            background: rgba(0,0,0,0.5);
+            border: 2px solid rgba(255,107,0,0.5);
             border-radius: 8px;
+            color: #fff;
             font-size: 1.2em;
             text-align: center;
             margin-bottom: 20px;
@@ -676,456 +828,42 @@
             padding: 12px;
             border: none;
             border-radius: 8px;
-            font-size: 1em;
-            font-weight: bold;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
         }
 
         .modal-btn.save {
-            background: #48bb78;
+            background: linear-gradient(135deg, #4caf50 0%, #8bc34a 100%);
             color: white;
         }
 
         .modal-btn.cancel {
-            background: #e2e8f0;
-            color: #4a5568;
-        }
-
-        .modal-btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .role-selector {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .role-option {
-            padding: 20px;
-            background: #f7fafc;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            cursor: pointer;
-            text-align: center;
-            font-size: 1.2em;
-            transition: all 0.3s;
-        }
-
-        .role-option:hover {
-            background: #edf2f7;
-            transform: scale(1.05);
-        }
-
-        .role-option.selected {
-            background: #667eea;
+            background: linear-gradient(135deg, #607d8b 0%, #90a4ae 100%);
             color: white;
-            border-color: #667eea;
-        }
-
-        .auction-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .auction-modal.active {
-            display: flex;
-        }
-
-        .auction-content {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            max-width: 900px;
-            width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-
-        .auction-top-section {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .auction-team-info {
-            flex: 1;
-            background: #f7fafc;
-            padding: 15px;
-            border-radius: 10px;
-        }
-
-        .auction-team-info h3 {
-            font-size: 14px;
-            color: #2d3748;
-            margin-bottom: 8px;
-        }
-
-        .auction-team-captain {
-            font-size: 16px;
-            font-weight: bold;
-            color: #667eea;
-            margin-bottom: 8px;
-        }
-
-        .auction-team-members {
-            font-size: 13px;
-            color: #4a5568;
-            line-height: 1.5;
-        }
-
-        .auction-player {
-            text-align: center;
-            padding: 30px;
-            background: linear-gradient(135deg, #f6ad55 0%, #ed8936 100%);
-            border-radius: 12px;
-            margin-bottom: 20px;
-            color: white;
-        }
-
-        .auction-player-name {
-            font-size: 2em;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .auction-player-info {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .auction-player-tier {
-            font-size: 1.2em;
-            background: rgba(255,255,255,0.3);
-            display: inline-block;
-            padding: 5px 15px;
-            border-radius: 20px;
-        }
-
-        .auction-player-role {
-            font-size: 1.2em;
-            background: rgba(255,255,255,0.5);
-            display: inline-block;
-            padding: 5px 15px;
-            border-radius: 20px;
-        }
-
-        .auction-timer {
-            text-align: center;
-            font-size: 3em;
-            font-weight: bold;
-            margin-bottom: 20px;
-            padding: 20px;
-            background: linear-gradient(135deg, #f6ad55 0%, #ed8936 100%);
-            border-radius: 15px;
-            color: white;
-            transition: all 0.3s;
-        }
-
-        .auction-timer.warning {
-            background: linear-gradient(135deg, #fc8181 0%, #f56565 100%);
-            animation: pulse 0.5s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .auction-points-config {
-            background: #fff5f5;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-
-        .auction-points-inputs {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .auction-points-input-group {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .auction-points-input-group label {
-            font-weight: bold;
-            color: #2d3748;
-        }
-
-        .auction-points-input-group input {
-            flex: 1;
-            padding: 8px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 14px;
-            text-align: center;
-        }
-
-        .auction-status {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 30px;
-        }
-
-        .auction-team {
-            flex: 1;
-            text-align: center;
-            padding: 20px;
-            background: #f7fafc;
-            border-radius: 10px;
-            margin: 0 10px;
-            transition: all 0.3s;
-        }
-
-        .auction-team.last-bid {
-            background: #c6f6d5;
-            border: 3px solid #48bb78;
-        }
-
-        .auction-team-name {
-            font-size: 1.2em;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #2d3748;
-        }
-
-        .auction-team-points {
-            font-size: 1.5em;
-            color: #d53f8c;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-
-        .auction-bid-input {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 1.1em;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        .auction-bid-btn {
-            width: 100%;
-            padding: 12px;
-            background: #667eea;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .auction-bid-btn:hover {
-            background: #5568d3;
-            transform: translateY(-2px);
-        }
-
-        .auction-bid-btn:disabled {
-            background: #cbd5e0;
-            cursor: not-allowed;
-        }
-
-        .auction-current-bid {
-            text-align: center;
-            font-size: 1.3em;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: #edf2f7;
-            border-radius: 10px;
-        }
-
-        .auction-winner {
-            color: #48bb78;
-            font-weight: bold;
-        }
-
-        .auction-controls {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .auction-pass-btn {
-            flex: 1;
-            padding: 15px;
-            background: #ed8936;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .auction-pass-btn:hover {
-            background: #dd6b20;
-        }
-
-        .auction-next-btn {
-            flex: 1;
-            padding: 15px;
-            background: #48bb78;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .auction-next-btn:hover {
-            background: #38a169;
-        }
-
-        .auction-close-btn {
-            padding: 15px 30px;
-            background: #f56565;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .auction-close-btn:hover {
-            background: #e53e3e;
-        }
-
-        .auction-result-info {
-            background: #e8f5e9;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 15px;
-            text-align: center;
-        }
-
-        .auction-result-team {
-            font-size: 18px;
-            font-weight: bold;
-            color: #2d3748;
-            margin-bottom: 8px;
-        }
-
-        .auction-result-price {
-            font-size: 24px;
-            font-weight: bold;
-            color: #667eea;
-        }
-
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #555;
         }
 
         @media (max-width: 968px) {
-            body {
-                max-height: none;
-                overflow: auto;
-            }
-
-            .container {
-                max-height: none;
-            }
-
             .main-layout {
                 flex-direction: column;
             }
 
             .right-sidebar {
                 width: 100%;
+                max-height: 300px;
             }
 
             .teams-grid {
                 grid-template-columns: 1fr;
-                gap: 20px;
             }
 
-            .vs-divider {
-                transform: rotate(90deg);
-                margin: 20px 0;
-            }
-
-            .header h1 {
-                font-size: 1.8em;
-            }
-
-            .spectators-grid {
+            .auction-battle {
                 grid-template-columns: 1fr;
             }
 
-            .action-buttons {
-                flex-wrap: wrap;
-            }
-
-            .btn {
-                min-width: calc(50% - 5px);
-            }
-
-            .auction-status {
-                flex-direction: column;
-            }
-
-            .auction-team {
-                margin: 10px 0;
-            }
-
-            .auction-points-inputs {
-                flex-direction: column;
-            }
-
-            .auction-top-section {
-                flex-direction: column;
-            }
-
-            .input-row {
-                flex-wrap: wrap;
-            }
-
-            .template-buttons {
-                width: 100%;
-            }
-
-            .template-btn {
-                flex: 1;
+            .auction-vs {
+                transform: rotate(90deg);
+                margin: 20px 0;
             }
         }
     </style>
@@ -1133,45 +871,39 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>⚽ 팀 편성 프로그램</h1>
+            <h1>⚡ CHAMSCODE</h1>
         </div>
 
         <div class="main-layout">
             <div class="left-content">
                 <div class="controls">
                     <div class="action-buttons">
-                        <button class="btn btn-balanced" id="balancedBtn">⚖️ 밸런스 랜덤</button>
-                        <button class="btn btn-spectator" id="spectatorRandomBtn">👥 관전자 랜덤</button>
-                        <button class="btn btn-auction" id="auctionBtn">🔨 경매하기</button>
-                        <button class="btn btn-secondary" id="clearTeamsBtn">🔄 전체 초기화</button>
+                        <button class="btn btn-balanced" id="balancedBtn">⚖️ 밸런스</button>
+                        <button class="btn btn-spectator" id="spectatorRandomBtn">👥 관전자</button>
+                        <button class="btn btn-auction" id="auctionBtn">🔨 경매</button>
+                        <button class="btn btn-secondary" id="clearTeamsBtn">🔄 초기화</button>
                     </div>
                 </div>
 
                 <div class="teams-container">
                     <div class="teams-grid">
-                        <div class="team">
+                        <div class="team team1">
                             <div class="team-header">
                                 <span>1팀</span>
-                                <div>
-                                    <span class="team-score" id="team1Score">0점</span>
-                                    <span class="team-points" id="team1Points">100P</span>
-                                </div>
+                                <span class="team-score" id="team1Score">0</span>
                             </div>
                             <div class="team-slots" id="team1"></div>
                         </div>
 
                         <div class="vs-divider">
                             <div>VS</div>
-                            <div class="score-diff" id="scoreDiff">점수차: 0</div>
+                            <div class="score-diff" id="scoreDiff">0</div>
                         </div>
 
-                        <div class="team">
+                        <div class="team team2">
                             <div class="team-header">
                                 <span>2팀</span>
-                                <div>
-                                    <span class="team-score" id="team2Score">0점</span>
-                                    <span class="team-points" id="team2Points">100P</span>
-                                </div>
+                                <span class="team-score" id="team2Score">0</span>
                             </div>
                             <div class="team-slots" id="team2"></div>
                         </div>
@@ -1180,127 +912,54 @@
                     <div class="spectators">
                         <div class="spectators-header">
                             <span>👥 관전자</span>
-                            <span class="spectator-count" id="spectatorCount">0명</span>
+                            <span id="spectatorCount">0</span>
                         </div>
                         <div class="spectators-grid empty" id="spectatorsGrid"></div>
-                    </div>
-                </div>
-
-                <div class="player-list-container">
-                    <div class="player-input-section">
-                        <div class="player-input-header">
-                            <label style="margin: 0;">참가자 목록 (클릭하여 관전자로 추가)</label>
-                        </div>
-                        
-                        <div class="saved-players" id="savedPlayers">
-                            <span style="color: #a0aec0;">저장된 참가자가 없습니다</span>
-                        </div>
-
-                        <div class="add-player-section">
-                            <div class="input-row">
-                                <input type="text" class="player-name-input" id="newPlayerInput" placeholder="새 참가자 이름 입력">
-                                <span class="tier-input-label">티어:</span>
-                                <input type="number" class="tier-input" id="newTierInput" value="3" min="1">
-                                <button class="add-player-btn" id="addPlayerBtn">➕ 추가</button>
-                            </div>
-                        </div>
-                        
-                        <div class="info-message">
-                            💡 참가자를 클릭하면 관전자에 추가됩니다. 관전자에서 역할(탱커/딜러/힐러/랜덤)을 선택할 수 있습니다. 팀 크기는 관전자 수에 따라 자동 조정됩니다.
-                        </div>
-                    </div>
-
-                    <div class="template-section">
-                        <div class="template-header">
-                            <label style="margin: 0;">참가자 템플릿</label>
-                            <div class="template-actions">
-                                <button class="template-action-btn save" id="saveTemplateBtn">💾 저장</button>
-                                <button class="template-action-btn rename" id="renameTemplateBtn">✏️ 이름변경</button>
-                            </div>
-                        </div>
-                        <div class="template-buttons" id="templateButtons"></div>
                     </div>
                 </div>
             </div>
 
             <div class="right-sidebar">
-                <div class="sidebar-section-title">📋 참가자 목록</div>
-                <div class="saved-players" id="sidebarPlayers">
-                    <span style="color: #a0aec0;">저장된 참가자가 없습니다</span>
+                <div class="sidebar-section-title">📋 참가자 추가</div>
+                <div class="input-row">
+                    <input type="text" class="player-name-input" id="newPlayerInput" placeholder="이름">
+                    <input type="number" class="tier-input" id="newTierInput" value="3" min="1">
+                    <button class="add-player-btn" id="addPlayerBtn">+</button>
                 </div>
 
-                <div class="sidebar-section-title" style="margin-top: 20px;">👥 관전자 목록</div>
+                <div class="sidebar-section-title">👤 참가자 목록</div>
+                <div class="saved-players" id="savedPlayers">
+                    <span style="color: rgba(255,255,255,0.3);">참가자 없음</span>
+                </div>
+
+                <div class="sidebar-section-title">👥 관전자</div>
                 <div class="saved-players" id="sidebarSpectators">
-                    <span style="color: #a0aec0;">관전자가 없습니다</span>
+                    <span style="color: rgba(255,255,255,0.3);">관전자 없음</span>
                 </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="modal" id="tierModal">
-        <div class="modal-content">
-            <div class="modal-title" id="tierModalTitle">티어 수정</div>
-            <input type="number" class="modal-input" id="tierModalInput" min="1">
-            <div class="modal-buttons">
-                <button class="modal-btn cancel" id="tierModalCancel">취소</button>
-                <button class="modal-btn save" id="tierModalSave">저장</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" id="roleModal">
-        <div class="modal-content" style="max-width: 400px;">
-            <div class="modal-title" id="roleModalTitle">역할 선택</div>
-            <div class="role-selector">
-                <div class="role-option" data-role="탱커">🛡️<br>탱커</div>
-                <div class="role-option" data-role="딜러">⚔️<br>딜러</div>
-                <div class="role-option" data-role="힐러">❤️<br>힐러</div>
-                <div class="role-option" data-role="랜덤">🎲<br>랜덤</div>
-            </div>
-            <div class="modal-buttons">
-                <button class="modal-btn cancel" id="roleModalCancel">취소</button>
-                <button class="modal-btn save" id="roleModalSave">확인</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal" id="templateNameModal">
-        <div class="modal-content">
-            <div class="modal-title" id="templateNameModalTitle">템플릿 이름</div>
-            <input type="text" class="modal-input" id="templateNameInput" placeholder="템플릿 이름 입력">
-            <div class="modal-buttons">
-                <button class="modal-btn cancel" id="templateNameCancel">취소</button>
-                <button class="modal-btn save" id="templateNameSave">저장</button>
+                <div class="template-section">
+                    <div style="font-size: 14px; font-weight: 700; margin-bottom: 10px; color: #00d4ff;">템플릿</div>
+                    <div class="template-buttons" id="templateButtons"></div>
+                    <div style="display: flex; gap: 8px; margin-top: 10px;">
+                        <button class="template-btn" style="flex: 1;" id="saveTemplateBtn">💾 저장</button>
+                        <button class="template-btn" style="flex: 1;" id="renameTemplateBtn">✏️ 이름변경</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="auction-modal" id="auctionModal">
         <div class="auction-content">
-            <div class="auction-top-section">
-                <div class="auction-team-info">
-                    <h3>1팀</h3>
-                    <div class="auction-team-captain" id="auctionTeam1Captain">팀장: -</div>
-                    <div class="auction-team-members" id="auctionTeam1MembersList">구성원: 없음</div>
-                </div>
-                <div class="auction-team-info">
-                    <h3>2팀</h3>
-                    <div class="auction-team-captain" id="auctionTeam2Captain">팀장: -</div>
-                    <div class="auction-team-members" id="auctionTeam2MembersList">구성원: 없음</div>
-                </div>
-            </div>
-
             <div class="auction-player">
                 <div class="auction-player-name" id="auctionPlayerName">플레이어</div>
-                <div class="auction-player-info">
-                    <div class="auction-player-tier" id="auctionPlayerTier">3점</div>
-                    <div class="auction-player-role" id="auctionPlayerRole">랜덤</div>
-                </div>
+                <div style="font-size: 1.2em; color: #00d4ff;" id="auctionPlayerTier">티어: 3</div>
             </div>
 
-            <div class="auction-timer" id="auctionTimer">⏱️ 6초</div>
+            <div class="auction-timer" id="auctionTimer">6</div>
 
             <div class="auction-points-config">
+                <div style="font-size: 14px; font-weight: 700; margin-bottom: 10px; color: #00d4ff; text-align: center;">포인트 설정</div>
                 <div class="auction-points-inputs">
                     <div class="auction-points-input-group">
                         <label>1팀:</label>
@@ -1313,35 +972,70 @@
                 </div>
             </div>
 
-            <div class="auction-current-bid" id="auctionCurrentBid">
-                현재 입찰가: <span class="auction-winner">없음</span>
-            </div>
-
-            <div class="auction-status">
-                <div class="auction-team" id="auctionTeam1">
-                    <div class="auction-team-name">1팀 (<span id="modalTeam1Captain">-</span>)</div>
-                    <div class="auction-team-points" id="auctionTeam1Points">100P</div>
-                    <input type="number" class="auction-bid-input" id="team1BidInput" min="0" placeholder="입찰가 입력">
-                    <button class="auction-bid-btn" id="team1BidBtn">입찰하기</button>
+            <div class="auction-battle">
+                <div class="auction-team-side team1-side" id="auctionTeam1Side">
+                    <div class="auction-team-name" id="auctionTeam1Name">1팀</div>
+                    <div class="auction-team-captain" id="auctionTeam1Captain">팀장: -</div>
+                    <div class="auction-team-members" id="auctionTeam1Members">구성원 없음</div>
+                    <div style="color: #00d4ff; font-size: 1.5em; font-weight: 900; margin-bottom: 15px;" id="auctionTeam1Points">100P</div>
+                    <input type="number" class="auction-bid-input" id="team1BidInput" placeholder="입찰가" min="0">
+                    <button class="auction-bid-btn" id="team1BidBtn">입찰</button>
                 </div>
 
-                <div class="auction-team" id="auctionTeam2">
-                    <div class="auction-team-name">2팀 (<span id="modalTeam2Captain">-</span>)</div>
-                    <div class="auction-team-points" id="auctionTeam2Points">100P</div>
-                    <input type="number" class="auction-bid-input" id="team2BidInput" min="0" placeholder="입찰가 입력">
-                    <button class="auction-bid-btn" id="team2BidBtn">입찰하기</button>
-                </div>
-            </div>
+                <div class="auction-vs">VS</div>
 
-            <div class="auction-result-info" id="auctionResultInfo" style="display: none;">
-                <div class="auction-result-team" id="auctionResultTeam">-</div>
-                <div class="auction-result-price" id="auctionResultPrice">낙찰가: 0원</div>
+                <div class="auction-team-side team2-side" id="auctionTeam2Side">
+                    <div class="auction-team-name" id="auctionTeam2Name">2팀</div>
+                    <div class="auction-team-captain" id="auctionTeam2Captain">팀장: -</div>
+                    <div class="auction-team-members" id="auctionTeam2Members">구성원 없음</div>
+                    <div style="color: #00d4ff; font-size: 1.5em; font-weight: 900; margin-bottom: 15px;" id="auctionTeam2Points">100P</div>
+                    <input type="number" class="auction-bid-input" id="team2BidInput" placeholder="입찰가" min="0">
+                    <button class="auction-bid-btn" id="team2BidBtn">입찰</button>
+                </div>
             </div>
 
             <div class="auction-controls">
-                <button class="auction-pass-btn" id="auctionPassBtn">⏭️ 유찰 (뒤로)</button>
-                <button class="auction-next-btn" id="auctionNextBtn">다음 선수</button>
-                <button class="auction-close-btn" id="auctionCloseBtn">닫기</button>
+                <button class="auction-control-btn auction-pass-btn" id="auctionPassBtn">⏭️ 유찰</button>
+                <button class="auction-control-btn auction-next-btn" id="auctionNextBtn">✓ 다음</button>
+                <button class="auction-control-btn auction-close-btn" id="auctionCloseBtn">✕ 닫기</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="tierModal">
+        <div class="modal-content">
+            <div class="modal-title">티어 수정</div>
+            <input type="number" class="modal-input" id="tierModalInput" min="1">
+            <div class="modal-buttons">
+                <button class="modal-btn cancel" id="tierModalCancel">취소</button>
+                <button class="modal-btn save" id="tierModalSave">저장</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="roleModal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-title">역할 선택</div>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px;">
+                <div class="role-option" data-role="탱커" style="padding: 25px; background: rgba(0,0,0,0.3); border: 2px solid rgba(255,255,255,0.3); border-radius: 10px; cursor: pointer; text-align: center; font-size: 1.3em; transition: all 0.3s;">🛡️<br>탱커</div>
+                <div class="role-option" data-role="딜러" style="padding: 25px; background: rgba(0,0,0,0.3); border: 2px solid rgba(255,255,255,0.3); border-radius: 10px; cursor: pointer; text-align: center; font-size: 1.3em; transition: all 0.3s;">⚔️<br>딜러</div>
+                <div class="role-option" data-role="힐러" style="padding: 25px; background: rgba(0,0,0,0.3); border: 2px solid rgba(255,255,255,0.3); border-radius: 10px; cursor: pointer; text-align: center; font-size: 1.3em; transition: all 0.3s;">❤️<br>힐러</div>
+                <div class="role-option" data-role="랜덤" style="padding: 25px; background: rgba(0,0,0,0.3); border: 2px solid rgba(255,255,255,0.3); border-radius: 10px; cursor: pointer; text-align: center; font-size: 1.3em; transition: all 0.3s;">🎲<br>랜덤</div>
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn cancel" id="roleModalCancel">취소</button>
+                <button class="modal-btn save" id="roleModalSave">확인</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="templateNameModal">
+        <div class="modal-content">
+            <div class="modal-title">템플릿 이름</div>
+            <input type="text" class="modal-input" id="templateNameInput" placeholder="템플릿 이름">
+            <div class="modal-buttons">
+                <button class="modal-btn cancel" id="templateNameCancel">취소</button>
+                <button class="modal-btn save" id="templateNameSave">저장</button>
             </div>
         </div>
     </div>
@@ -1360,7 +1054,6 @@
         let auctionPlayers = [];
         let currentAuctionIndex = 0;
         let currentBid = { team: null, amount: 0 };
-
         let team1CaptainName = '';
         let team2CaptainName = '';
 
@@ -1370,13 +1063,6 @@
         let templates = [];
         let currentTemplateIndex = 0;
         const MAX_TEMPLATES = 5;
-
-        const ROLE_ICONS = {
-            '탱커': '🛡️',
-            '딜러': '⚔️',
-            '힐러': '❤️',
-            '랜덤': '🎲'
-        };
 
         const STORAGE_KEY_TEMPLATES = 'teamDivider_templates';
         const STORAGE_KEY_CURRENT = 'teamDivider_currentTemplate';
@@ -1389,7 +1075,6 @@
             updateSavedPlayersUI();
             setupEventListeners();
             setupSpectatorsDragDrop();
-            updateTeamPoints();
             updateSidebarLists();
         }
 
@@ -1461,22 +1146,12 @@
             });
         }
 
-        function openTemplateNameModal(mode) {
+        function openTemplateNameModal() {
             const modal = document.getElementById('templateNameModal');
             const input = document.getElementById('templateNameInput');
-            const title = document.getElementById('templateNameModalTitle');
-            
-            if (mode === 'rename') {
-                title.textContent = '템플릿 이름 변경';
-                input.value = templates[currentTemplateIndex].name;
-            } else {
-                title.textContent = '템플릿 이름';
-                input.value = templates[currentTemplateIndex].name;
-            }
-            
+            input.value = templates[currentTemplateIndex].name;
             modal.classList.add('active');
             input.focus();
-            input.select();
         }
 
         function saveTemplateName() {
@@ -1493,11 +1168,6 @@
             updateTemplateButtons();
             
             document.getElementById('templateNameModal').classList.remove('active');
-        }
-
-        function updateTeamPoints() {
-            document.getElementById('team1Points').textContent = `${team1Points}P`;
-            document.getElementById('team2Points').textContent = `${team2Points}P`;
         }
 
         function getTeamPlayerNames() {
@@ -1528,19 +1198,6 @@
             return spectatorNames;
         }
 
-        function getEmptySlotCount() {
-            const allSlots = document.querySelectorAll('.team-slot');
-            let emptyCount = 0;
-            
-            allSlots.forEach(slot => {
-                if (slot.classList.contains('empty') || !slot.querySelector('.player-card')) {
-                    emptyCount++;
-                }
-            });
-            
-            return emptyCount;
-        }
-
         function calculateTeamSize() {
             const spectatorCount = getSpectatorPlayers().length;
             
@@ -1551,19 +1208,14 @@
             let team2Count = 0;
             
             team1Slots.forEach(slot => {
-                if (slot.querySelector('.player-card')) {
-                    team1Count++;
-                }
+                if (slot.querySelector('.player-card')) team1Count++;
             });
             
             team2Slots.forEach(slot => {
-                if (slot.querySelector('.player-card')) {
-                    team2Count++;
-                }
+                if (slot.querySelector('.player-card')) team2Count++;
             });
             
             const totalPlayers = spectatorCount + team1Count + team2Count;
-            
             return Math.ceil(totalPlayers / 2);
         }
 
@@ -1595,7 +1247,7 @@
 
         function updateTimerDisplay() {
             const timerElement = document.getElementById('auctionTimer');
-            timerElement.textContent = `⏱️ ${auctionTimeLeft}초`;
+            timerElement.textContent = auctionTimeLeft;
             
             if (auctionTimeLeft <= 3) {
                 timerElement.classList.add('warning');
@@ -1609,42 +1261,19 @@
             
             spectatorsGrid.addEventListener('dragover', handleSpectatorDragOver);
             spectatorsGrid.addEventListener('drop', handleSpectatorDrop);
-            spectatorsGrid.addEventListener('dragleave', handleSpectatorDragLeave);
-            spectatorsGrid.addEventListener('dragenter', handleSpectatorDragEnter);
         }
 
         function handleSpectatorDragOver(e) {
-            if (e.preventDefault) {
-                e.preventDefault();
-            }
+            if (e.preventDefault) e.preventDefault();
             e.dataTransfer.dropEffect = 'move';
             return false;
         }
 
-        function handleSpectatorDragEnter(e) {
-            e.currentTarget.classList.add('drag-over');
-        }
-
-        function handleSpectatorDragLeave(e) {
-            if (e.target === e.currentTarget) {
-                e.currentTarget.classList.remove('drag-over');
-            }
-        }
-
         function handleSpectatorDrop(e) {
-            if (e.stopPropagation) {
-                e.stopPropagation();
-            }
-            if (e.preventDefault) {
-                e.preventDefault();
-            }
+            if (e.stopPropagation) e.stopPropagation();
+            if (e.preventDefault) e.preventDefault();
             
-            const spectatorsGrid = document.getElementById('spectatorsGrid');
-            spectatorsGrid.classList.remove('drag-over');
-            
-            if (!draggedElement || !sourceContainer) {
-                return false;
-            }
+            if (!draggedElement || !sourceContainer) return false;
             
             const player = JSON.parse(draggedElement.dataset.player);
             
@@ -1667,9 +1296,7 @@
             const spectatorsGrid = document.getElementById('spectatorsGrid');
             
             const spectatorNames = getSpectatorPlayerNames();
-            if (spectatorNames.has(player.name)) {
-                return;
-            }
+            if (spectatorNames.has(player.name)) return;
             
             spectatorsGrid.classList.remove('empty');
             const card = createSpectatorCard(player);
@@ -1679,11 +1306,19 @@
         function createSpectatorCard(player) {
             const card = document.createElement('div');
             card.className = 'spectator-card';
+            
+            const roleIcons = {
+                '탱커': '🛡️',
+                '딜러': '⚔️',
+                '힐러': '❤️',
+                '랜덤': '🎲'
+            };
+            
             card.innerHTML = `
-                <button class="remove-spectator-btn" title="관전자에서 제외">✕</button>
+                <button class="remove-spectator-btn">✕</button>
                 ${player.name}
-                <div class="tier-label">${player.tier}점</div>
-                <div class="role-label">${ROLE_ICONS[player.role]} ${player.role}</div>
+                <div class="tier-label">${player.tier}</div>
+                ${player.role ? `<div class="role-label" style="cursor: pointer; margin-top: 5px; font-size: 0.8em; background: rgba(255,255,255,0.3); padding: 2px 6px; border-radius: 8px; display: inline-block;">${roleIcons[player.role] || '🎲'} ${player.role}</div>` : ''}
             `;
             card.draggable = true;
             card.dataset.player = JSON.stringify(player);
@@ -1696,54 +1331,16 @@
                 e.stopPropagation();
                 removeFromSpectators(player);
             });
-
+            
             const roleLabel = card.querySelector('.role-label');
-            roleLabel.addEventListener('click', (e) => {
-                e.stopPropagation();
-                openRoleModal(player);
-            });
+            if (roleLabel) {
+                roleLabel.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    openRoleModal(player);
+                });
+            }
             
             return card;
-        }
-
-        function openRoleModal(player) {
-            editingSpectatorId = player.id;
-            selectedRole = player.role;
-            
-            document.getElementById('roleModalTitle').textContent = `${player.name} 역할 선택`;
-            
-            document.querySelectorAll('.role-option').forEach(opt => {
-                opt.classList.remove('selected');
-                if (opt.dataset.role === player.role) {
-                    opt.classList.add('selected');
-                }
-            });
-            
-            document.getElementById('roleModal').classList.add('active');
-        }
-
-        function saveRoleChange() {
-            if (!selectedRole) {
-                alert('역할을 선택해주세요!');
-                return;
-            }
-
-            const spectatorsGrid = document.getElementById('spectatorsGrid');
-            const cards = spectatorsGrid.querySelectorAll('.spectator-card');
-            
-            cards.forEach(card => {
-                const player = JSON.parse(card.dataset.player);
-                if (player.id === editingSpectatorId) {
-                    player.role = selectedRole;
-                    card.dataset.player = JSON.stringify(player);
-                    card.querySelector('.role-label').innerHTML = `${ROLE_ICONS[player.role]} ${player.role}`;
-                }
-            });
-            
-            document.getElementById('roleModal').classList.remove('active');
-            editingSpectatorId = null;
-            selectedRole = null;
-            updateSidebarLists();
         }
 
         function removeFromSpectators(player) {
@@ -1766,7 +1363,7 @@
         function updateSpectatorCount() {
             const spectatorsGrid = document.getElementById('spectatorsGrid');
             const count = spectatorsGrid.querySelectorAll('.spectator-card').length;
-            document.getElementById('spectatorCount').textContent = `${count}명`;
+            document.getElementById('spectatorCount').textContent = count;
             
             if (count === 0) {
                 spectatorsGrid.classList.add('empty');
@@ -1776,50 +1373,17 @@
         }
 
         function updateSidebarLists() {
-            const sidebarPlayers = document.getElementById('sidebarPlayers');
-            sidebarPlayers.innerHTML = '';
-            
-            if (savedPlayers.length === 0) {
-                sidebarPlayers.innerHTML = '<span style="color: #a0aec0;">저장된 참가자가 없습니다</span>';
-            } else {
-                const teamNames = getTeamPlayerNames();
-                const spectatorNames = getSpectatorPlayerNames();
-                
-                const sortedPlayers = [...savedPlayers].sort((a, b) => {
-                    return a.name.localeCompare(b.name, 'ko');
-                });
-
-                sortedPlayers.forEach(player => {
-                    const tag = document.createElement('div');
-                    tag.className = 'saved-player-tag';
-                    tag.style.fontSize = '12px';
-                    tag.style.padding = '6px 10px';
-                    
-                    if (teamNames.has(player.name)) {
-                        tag.classList.add('in-team');
-                    } else if (spectatorNames.has(player.name)) {
-                        tag.classList.add('in-spectator');
-                    }
-
-                    tag.innerHTML = `${player.name} <span style="opacity: 0.7;">(${player.tier})</span>`;
-                    sidebarPlayers.appendChild(tag);
-                });
-            }
-
             const sidebarSpectators = document.getElementById('sidebarSpectators');
             sidebarSpectators.innerHTML = '';
             
             const spectatorPlayers = getSpectatorPlayers();
             if (spectatorPlayers.length === 0) {
-                sidebarSpectators.innerHTML = '<span style="color: #a0aec0;">관전자가 없습니다</span>';
+                sidebarSpectators.innerHTML = '<span style="color: rgba(255,255,255,0.3);">관전자 없음</span>';
             } else {
                 spectatorPlayers.forEach(player => {
                     const tag = document.createElement('div');
                     tag.className = 'saved-player-tag in-spectator';
-                    tag.style.fontSize = '12px';
-                    tag.style.padding = '6px 10px';
-                    
-                    tag.innerHTML = `${player.name} <span style="opacity: 0.7;">(${player.tier})</span>`;
+                    tag.innerHTML = `${player.name} (${player.tier})`;
                     sidebarSpectators.appendChild(tag);
                 });
             }
@@ -1828,14 +1392,7 @@
         function setupEventListeners() {
             document.getElementById('addPlayerBtn').addEventListener('click', addPlayer);
             document.getElementById('newPlayerInput').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    addPlayer();
-                }
-            });
-            document.getElementById('newTierInput').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    addPlayer();
-                }
+                if (e.key === 'Enter') addPlayer();
             });
 
             document.getElementById('balancedBtn').addEventListener('click', balancedRandomAssign);
@@ -1850,84 +1407,90 @@
             document.getElementById('auctionCloseBtn').addEventListener('click', closeAuction);
 
             document.getElementById('team1BidInput').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    placeBid(1);
-                }
+                if (e.key === 'Enter') placeBid(1);
             });
 
             document.getElementById('team2BidInput').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    placeBid(2);
+                if (e.key === 'Enter') placeBid(2);
+            });
+
+            document.getElementById('team1BidInput').addEventListener('focus', function() {
+                this.select();
+            });
+
+            document.getElementById('team2BidInput').addEventListener('focus', function() {
+                this.select();
+            });
+
+            document.getElementById('team1BidInput').addEventListener('input', function() {
+                const maxBid = team1Points;
+                if (parseInt(this.value) > maxBid) {
+                    this.value = maxBid;
+                }
+            });
+
+            document.getElementById('team2BidInput').addEventListener('input', function() {
+                const maxBid = team2Points;
+                if (parseInt(this.value) > maxBid) {
+                    this.value = maxBid;
                 }
             });
 
             document.getElementById('auctionTeam1PointsInput').addEventListener('input', function() {
                 team1Points = parseInt(this.value) || 0;
-                updateTeamPoints();
                 document.getElementById('auctionTeam1Points').textContent = `${team1Points}P`;
             });
 
             document.getElementById('auctionTeam2PointsInput').addEventListener('input', function() {
                 team2Points = parseInt(this.value) || 0;
-                updateTeamPoints();
                 document.getElementById('auctionTeam2Points').textContent = `${team2Points}P`;
             });
 
-            document.getElementById('tierModalCancel').addEventListener('click', closeTierModal);
-            document.getElementById('tierModalSave').addEventListener('click', saveTierChange);
-            document.getElementById('tierModalInput').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    saveTierChange();
-                }
+            document.getElementById('tierModalCancel').addEventListener('click', () => {
+                document.getElementById('tierModal').classList.remove('active');
             });
+            document.getElementById('tierModalSave').addEventListener('click', saveTierChange);
 
             document.querySelectorAll('.role-option').forEach(opt => {
                 opt.addEventListener('click', function() {
-                    document.querySelectorAll('.role-option').forEach(o => o.classList.remove('selected'));
-                    this.classList.add('selected');
+                    document.querySelectorAll('.role-option').forEach(o => {
+                        o.style.background = 'rgba(0,0,0,0.3)';
+                        o.style.borderColor = 'rgba(255,255,255,0.3)';
+                    });
+                    this.style.background = 'linear-gradient(135deg, #ff6b00 0%, #ff0080 100%)';
+                    this.style.borderColor = '#ff6b00';
                     selectedRole = this.dataset.role;
                 });
             });
+            
             document.getElementById('roleModalCancel').addEventListener('click', () => {
                 document.getElementById('roleModal').classList.remove('active');
                 editingSpectatorId = null;
                 selectedRole = null;
             });
+            
             document.getElementById('roleModalSave').addEventListener('click', saveRoleChange);
 
             document.getElementById('saveTemplateBtn').addEventListener('click', () => {
                 saveCurrentTemplate();
-                alert('현재 템플릿이 저장되었습니다!');
+                alert('저장 완료!');
             });
-            document.getElementById('renameTemplateBtn').addEventListener('click', () => {
-                openTemplateNameModal('rename');
-            });
+            document.getElementById('renameTemplateBtn').addEventListener('click', openTemplateNameModal);
 
             document.getElementById('templateNameCancel').addEventListener('click', () => {
                 document.getElementById('templateNameModal').classList.remove('active');
             });
             document.getElementById('templateNameSave').addEventListener('click', saveTemplateName);
-            document.getElementById('templateNameInput').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    saveTemplateName();
-                }
-            });
         }
 
         function addPlayer() {
             const input = document.getElementById('newPlayerInput');
             const tierInput = document.getElementById('newTierInput');
             const name = input.value.trim();
-            
             const tier = parseInt(tierInput.value) || 3;
 
             if (name === '') {
                 alert('이름을 입력해주세요!');
-                return;
-            }
-
-            if (tier < 1) {
-                alert('티어는 1 이상이어야 합니다!');
                 return;
             }
 
@@ -1952,20 +1515,69 @@
             updateSidebarLists();
         }
 
+        function openRoleModal(player) {
+            editingSpectatorId = player.id;
+            selectedRole = player.role || '랜덤';
+            
+            document.querySelectorAll('.role-option').forEach(opt => {
+                opt.style.background = 'rgba(0,0,0,0.3)';
+                opt.style.borderColor = 'rgba(255,255,255,0.3)';
+                if (opt.dataset.role === selectedRole) {
+                    opt.style.background = 'linear-gradient(135deg, #ff6b00 0%, #ff0080 100%)';
+                    opt.style.borderColor = '#ff6b00';
+                }
+            });
+            
+            document.getElementById('roleModal').classList.add('active');
+        }
+
+        function saveRoleChange() {
+            if (!selectedRole) {
+                alert('역할을 선택해주세요!');
+                return;
+            }
+
+            const spectatorsGrid = document.getElementById('spectatorsGrid');
+            const cards = spectatorsGrid.querySelectorAll('.spectator-card');
+            
+            cards.forEach(card => {
+                const player = JSON.parse(card.dataset.player);
+                if (player.id === editingSpectatorId) {
+                    player.role = selectedRole;
+                    card.dataset.player = JSON.stringify(player);
+                    
+                    const roleIcons = {
+                        '탱커': '🛡️',
+                        '딜러': '⚔️',
+                        '힐러': '❤️',
+                        '랜덤': '🎲'
+                    };
+                    
+                    const roleLabel = card.querySelector('.role-label');
+                    if (roleLabel) {
+                        roleLabel.innerHTML = `${roleIcons[selectedRole]} ${selectedRole}`;
+                    }
+                }
+            });
+            
+            document.getElementById('roleModal').classList.remove('active');
+            editingSpectatorId = null;
+            selectedRole = null;
+            updateSidebarLists();
+        }
+
         function removePlayer(id) {
             const player = savedPlayers.find(p => p.id === id);
             if (!player) return;
             
-            if (confirm(`"${player.name} (${player.tier}점)"을(를) 목록에서 삭제하시겠습니까?`)) {
+            if (confirm(`"${player.name}"을(를) 삭제하시겠습니까?`)) {
                 savedPlayers = savedPlayers.filter(p => p.id !== id);
                 
                 const spectatorsGrid = document.getElementById('spectatorsGrid');
                 const cards = spectatorsGrid.querySelectorAll('.spectator-card');
                 cards.forEach(card => {
                     const cardPlayer = JSON.parse(card.dataset.player);
-                    if (cardPlayer.id === id) {
-                        card.remove();
-                    }
+                    if (cardPlayer.id === id) card.remove();
                 });
                 
                 const allSlots = document.querySelectorAll('.team-slot');
@@ -1991,23 +1603,16 @@
 
         function openTierModal(player) {
             editingPlayerId = player.id;
-            document.getElementById('tierModalTitle').textContent = `${player.name} 티어 수정`;
             document.getElementById('tierModalInput').value = player.tier;
             document.getElementById('tierModal').classList.add('active');
             document.getElementById('tierModalInput').focus();
-            document.getElementById('tierModalInput').select();
-        }
-
-        function closeTierModal() {
-            document.getElementById('tierModal').classList.remove('active');
-            editingPlayerId = null;
         }
 
         function saveTierChange() {
             const newTier = parseInt(document.getElementById('tierModalInput').value);
             
             if (isNaN(newTier) || newTier < 1) {
-                alert('티어는 1 이상의 숫자여야 합니다!');
+                alert('1 이상의 숫자를 입력해주세요!');
                 return;
             }
 
@@ -2015,15 +1620,13 @@
             if (player) {
                 player.tier = newTier;
                 saveCurrentTemplate();
-                
                 updatePlayerCardsEverywhere(player);
-                
                 updateSavedPlayersUI();
                 updateTeamScores();
                 updateSidebarLists();
             }
             
-            closeTierModal();
+            document.getElementById('tierModal').classList.remove('active');
         }
 
         function updatePlayerCardsEverywhere(player) {
@@ -2034,7 +1637,7 @@
                 if (cardPlayer.id === player.id) {
                     cardPlayer.tier = player.tier;
                     card.dataset.player = JSON.stringify(cardPlayer);
-                    card.querySelector('.tier-label').textContent = `${player.tier}점`;
+                    card.querySelector('.tier-label').textContent = player.tier;
                 }
             });
 
@@ -2046,7 +1649,7 @@
                     if (cardPlayer.id === player.id) {
                         cardPlayer.tier = player.tier;
                         card.dataset.player = JSON.stringify(cardPlayer);
-                        card.querySelector('.tier-label').textContent = `${player.tier}점`;
+                        card.querySelector('.tier-label').textContent = player.tier;
                     }
                 }
             });
@@ -2055,7 +1658,7 @@
         function selectPlayer(player) {
             const teamNames = getTeamPlayerNames();
             if (teamNames.has(player.name)) {
-                alert(`${player.name}은(는) 이미 팀에 배치되어 있습니다!`);
+                alert(`${player.name}은(는) 이미 팀에 있습니다!`);
                 return;
             }
 
@@ -2077,18 +1680,14 @@
             container.innerHTML = '';
 
             if (savedPlayers.length === 0) {
-                container.innerHTML = '<span style="color: #a0aec0;">저장된 참가자가 없습니다</span>';
+                container.innerHTML = '<span style="color: rgba(255,255,255,0.3);">참가자 없음</span>';
                 return;
             }
 
             const teamNames = getTeamPlayerNames();
             const spectatorNames = getSpectatorPlayerNames();
 
-            const sortedPlayers = [...savedPlayers].sort((a, b) => {
-                return a.name.localeCompare(b.name, 'ko');
-            });
-
-            sortedPlayers.forEach(player => {
+            savedPlayers.forEach(player => {
                 const tag = document.createElement('div');
                 tag.className = 'saved-player-tag';
                 
@@ -2097,41 +1696,17 @@
                 } else if (spectatorNames.has(player.name)) {
                     tag.classList.add('in-spectator');
                 } else {
-                    tag.classList.add('selectable');
                     tag.addEventListener('click', () => selectPlayer(player));
                 }
 
-                const contentDiv = document.createElement('div');
-                contentDiv.style.display = 'flex';
-                contentDiv.style.alignItems = 'center';
-                contentDiv.style.gap = '8px';
-                contentDiv.style.flex = '1';
-
-                const nameSpan = document.createElement('span');
-                nameSpan.textContent = player.name;
-
-                const tierBadge = document.createElement('span');
-                tierBadge.className = 'tier-badge';
-                tierBadge.textContent = player.tier;
-                tierBadge.title = '클릭하여 티어 수정';
-                tierBadge.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    openTierModal(player);
-                });
-
-                contentDiv.appendChild(nameSpan);
-                contentDiv.appendChild(tierBadge);
-
-                const removeBtn = document.createElement('button');
-                removeBtn.className = 'remove-btn';
-                removeBtn.textContent = '✕';
-                removeBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
+                tag.innerHTML = `${player.name} (${player.tier})`;
+                
+                tag.addEventListener('dblclick', () => openTierModal(player));
+                tag.addEventListener('contextmenu', (e) => {
+                    e.preventDefault();
                     removePlayer(player.id);
                 });
 
-                tag.appendChild(contentDiv);
-                tag.appendChild(removeBtn);
                 container.appendChild(tag);
             });
         }
@@ -2188,8 +1763,6 @@
             
             slot.addEventListener('dragover', handleDragOver);
             slot.addEventListener('drop', handleDrop);
-            slot.addEventListener('dragleave', handleDragLeave);
-            slot.addEventListener('dragenter', handleDragEnter);
             
             return slot;
         }
@@ -2199,8 +1772,8 @@
             card.className = 'player-card';
             card.innerHTML = `
                 ${player.name}
-                <div class="tier-label">${player.tier}점</div>
-                <div class="role-label">${ROLE_ICONS[player.role]} ${player.role}</div>
+                <div class="tier-label">${player.tier}</div>
+                ${player.role ? `<div class="role-label">${player.role}</div>` : ''}
             `;
             card.draggable = true;
             card.dataset.player = JSON.stringify(player);
@@ -2216,17 +1789,10 @@
             sourceContainer = e.target.parentElement;
             e.target.classList.add('dragging');
             e.dataTransfer.effectAllowed = 'move';
-            e.dataTransfer.setData('text/html', e.target.innerHTML);
         }
 
         function handleDragEnd(e) {
             e.target.classList.remove('dragging');
-            
-            document.querySelectorAll('.team-slot').forEach(slot => {
-                slot.classList.remove('drag-over');
-            });
-            
-            document.getElementById('spectatorsGrid').classList.remove('drag-over');
             
             updateTeamScores();
             updateSpectatorCount();
@@ -2235,43 +1801,19 @@
         }
 
         function handleDragOver(e) {
-            if (e.preventDefault) {
-                e.preventDefault();
-            }
+            if (e.preventDefault) e.preventDefault();
             e.dataTransfer.dropEffect = 'move';
             return false;
         }
 
-        function handleDragEnter(e) {
-            if (e.currentTarget.classList.contains('team-slot')) {
-                e.currentTarget.classList.add('drag-over');
-            }
-        }
-
-        function handleDragLeave(e) {
-            if (e.currentTarget.classList.contains('team-slot')) {
-                e.currentTarget.classList.remove('drag-over');
-            }
-        }
-
         function handleDrop(e) {
-            if (e.stopPropagation) {
-                e.stopPropagation();
-            }
-            if (e.preventDefault) {
-                e.preventDefault();
-            }
+            if (e.stopPropagation) e.stopPropagation();
+            if (e.preventDefault) e.preventDefault();
             
             const targetSlot = e.currentTarget;
-            targetSlot.classList.remove('drag-over');
             
-            if (!draggedElement || !sourceContainer) {
-                return false;
-            }
-            
-            if (sourceContainer === targetSlot) {
-                return false;
-            }
+            if (!draggedElement || !sourceContainer) return false;
+            if (sourceContainer === targetSlot) return false;
             
             const player = JSON.parse(draggedElement.dataset.player);
             const existingCard = targetSlot.querySelector('.player-card');
@@ -2339,12 +1881,12 @@
                 }
             });
             
-            document.getElementById('team1Score').textContent = `${team1Score}점`;
-            document.getElementById('team2Score').textContent = `${team2Score}점`;
+            document.getElementById('team1Score').textContent = team1Score;
+            document.getElementById('team2Score').textContent = team2Score;
             
             const diff = Math.abs(team1Score - team2Score);
             const diffElement = document.getElementById('scoreDiff');
-            diffElement.textContent = `점수차: ${diff}`;
+            diffElement.textContent = diff;
             
             if (diff <= 1) {
                 diffElement.classList.add('balanced');
@@ -2365,14 +1907,6 @@
             return players;
         }
 
-        function getRoleCounts(players) {
-            const counts = { '탱커': 0, '딜러': 0, '힐러': 0, '랜덤': 0 };
-            players.forEach(p => {
-                counts[p.role]++;
-            });
-            return counts;
-        }
-
         function balancedRandomAssign() {
             const spectatorPlayers = getSpectatorPlayers();
             
@@ -2382,7 +1916,7 @@
             }
 
             if (spectatorPlayers.length < 2) {
-                alert('최소 2명 이상의 관전자가 필요합니다!');
+                alert('최소 2명 이상 필요합니다!');
                 return;
             }
 
@@ -2408,30 +1942,16 @@
                 const team2TierScore = team2.reduce((sum, p) => sum + p.tier, 0);
                 const tierDiff = Math.abs(team1TierScore - team2TierScore);
                 
-                const team1Roles = getRoleCounts(team1);
-                const team2Roles = getRoleCounts(team2);
-                let roleDiff = 0;
-                Object.keys(team1Roles).forEach(role => {
-                    roleDiff += Math.abs(team1Roles[role] - team2Roles[role]);
-                });
-                
-                const totalScore = tierDiff + roleDiff * 10;
-                
-                if (totalScore < bestScore) {
-                    bestScore = totalScore;
+                if (tierDiff < bestScore) {
+                    bestScore = tierDiff;
                     bestAssignment = shuffled;
                     
-                    if (totalScore === 0) break;
+                    if (tierDiff === 0) break;
                 }
             }
 
             if (bestAssignment) {
                 assignPlayersToTeams(bestAssignment, teamSize);
-                
-                const team1Players = bestAssignment.slice(0, teamSize);
-                const team2Players = bestAssignment.slice(teamSize, teamSize * 2);
-                team1CaptainName = team1Players.sort((a, b) => b.tier - a.tier)[0].name;
-                team2CaptainName = team2Players.sort((a, b) => b.tier - a.tier)[0].name;
                 
                 const spectatorsGrid = document.getElementById('spectatorsGrid');
                 spectatorsGrid.innerHTML = '';
@@ -2440,17 +1960,8 @@
                 updateSavedPlayersUI();
                 updateSidebarLists();
                 
-                const team1 = bestAssignment.slice(0, teamSize);
-                const team2 = bestAssignment.slice(teamSize);
-                const tierDiff = Math.abs(
-                    team1.reduce((s, p) => s + p.tier, 0) - 
-                    team2.reduce((s, p) => s + p.tier, 0)
-                );
-                
                 if (bestScore === 0) {
-                    setTimeout(() => alert('🎯 완벽한 밸런스로 팀이 편성되었습니다! (티어 + 역할)'), 100);
-                } else if (tierDiff <= 1) {
-                    setTimeout(() => alert(`⚖️ 최적 밸런스로 팀이 편성되었습니다! (점수차: ${tierDiff})`), 100);
+                    setTimeout(() => alert('🎯 완벽한 밸런스!'), 100);
                 }
             }
         }
@@ -2463,109 +1974,59 @@
                 return;
             }
 
-            const emptySlotCount = getEmptySlotCount();
-            
-            if (emptySlotCount === 0) {
-                alert('팀에 빈 자리가 없습니다!');
-                return;
-            }
-
             const team1Slots = document.querySelectorAll('#team1 .team-slot');
             const team2Slots = document.querySelectorAll('#team2 .team-slot');
             
-            let team1Current = [];
-            let team2Current = [];
+            let emptyCount = 0;
+            [...team1Slots, ...team2Slots].forEach(slot => {
+                if (slot.classList.contains('empty') || !slot.querySelector('.player-card')) {
+                    emptyCount++;
+                }
+            });
+            
+            if (emptyCount === 0) {
+                alert('빈 자리가 없습니다!');
+                return;
+            }
+
+            const teamSize = calculateTeamSize();
+            const playersToAssign = Math.min(spectatorPlayers.length, emptyCount);
+            
+            const shuffled = [...spectatorPlayers].sort(() => Math.random() - 0.5);
+            
+            let playerIndex = 0;
             
             team1Slots.forEach(slot => {
-                const card = slot.querySelector('.player-card');
-                if (card) {
-                    team1Current.push(JSON.parse(card.dataset.player));
+                if ((slot.classList.contains('empty') || !slot.querySelector('.player-card')) && playerIndex < playersToAssign) {
+                    slot.innerHTML = '';
+                    slot.classList.remove('empty');
+                    const card = createPlayerCard(shuffled[playerIndex]);
+                    slot.appendChild(card);
+                    playerIndex++;
                 }
             });
             
             team2Slots.forEach(slot => {
-                const card = slot.querySelector('.player-card');
-                if (card) {
-                    team2Current.push(JSON.parse(card.dataset.player));
+                if ((slot.classList.contains('empty') || !slot.querySelector('.player-card')) && playerIndex < playersToAssign) {
+                    slot.innerHTML = '';
+                    slot.classList.remove('empty');
+                    const card = createPlayerCard(shuffled[playerIndex]);
+                    slot.appendChild(card);
+                    playerIndex++;
                 }
             });
-
-            const teamSize = calculateTeamSize();
-            const playersToAssign = Math.min(spectatorPlayers.length, emptySlotCount);
-            let bestAssignment = null;
-            let bestScore = Infinity;
-            const attempts = 10000;
-
-            for (let i = 0; i < attempts; i++) {
-                const shuffled = [...spectatorPlayers].sort(() => Math.random() - 0.5);
-                const testPlayers = shuffled.slice(0, playersToAssign);
-                
-                let team1Test = [...team1Current];
-                let team2Test = [...team2Current];
-                
-                for (let j = 0; j < testPlayers.length; j++) {
-                    if (team1Test.length < teamSize) {
-                        team1Test.push(testPlayers[j]);
-                    } else if (team2Test.length < teamSize) {
-                        team2Test.push(testPlayers[j]);
-                    }
-                }
-                
-                const team1TierScore = team1Test.reduce((sum, p) => sum + p.tier, 0);
-                const team2TierScore = team2Test.reduce((sum, p) => sum + p.tier, 0);
-                const tierDiff = Math.abs(team1TierScore - team2TierScore);
-                
-                const team1Roles = getRoleCounts(team1Test);
-                const team2Roles = getRoleCounts(team2Test);
-                let roleDiff = 0;
-                Object.keys(team1Roles).forEach(role => {
-                    roleDiff += Math.abs(team1Roles[role] - team2Roles[role]);
-                });
-                
-                const totalScore = tierDiff + roleDiff * 10;
-                
-                if (totalScore < bestScore) {
-                    bestScore = totalScore;
-                    bestAssignment = testPlayers;
-                    if (totalScore === 0) break;
-                }
+            
+            const spectatorsGrid = document.getElementById('spectatorsGrid');
+            spectatorsGrid.innerHTML = '';
+            
+            for (let i = playerIndex; i < spectatorPlayers.length; i++) {
+                addToSpectators(spectatorPlayers[i]);
             }
-
-            if (bestAssignment) {
-                let playerIndex = 0;
-                
-                team1Slots.forEach(slot => {
-                    if ((slot.classList.contains('empty') || !slot.querySelector('.player-card')) && playerIndex < bestAssignment.length) {
-                        slot.innerHTML = '';
-                        slot.classList.remove('empty');
-                        const card = createPlayerCard(bestAssignment[playerIndex]);
-                        slot.appendChild(card);
-                        playerIndex++;
-                    }
-                });
-                
-                team2Slots.forEach(slot => {
-                    if ((slot.classList.contains('empty') || !slot.querySelector('.player-card')) && playerIndex < bestAssignment.length) {
-                        slot.innerHTML = '';
-                        slot.classList.remove('empty');
-                        const card = createPlayerCard(bestAssignment[playerIndex]);
-                        slot.appendChild(card);
-                        playerIndex++;
-                    }
-                });
-                
-                const spectatorsGrid = document.getElementById('spectatorsGrid');
-                spectatorsGrid.innerHTML = '';
-                
-                for (let i = playerIndex; i < spectatorPlayers.length; i++) {
-                    addToSpectators(spectatorPlayers[i]);
-                }
-                
-                updateSpectatorCount();
-                updateTeamScores();
-                updateSavedPlayersUI();
-                updateSidebarLists();
-            }
+            
+            updateSpectatorCount();
+            updateTeamScores();
+            updateSavedPlayersUI();
+            updateSidebarLists();
         }
 
         function startAuction() {
@@ -2577,7 +2038,7 @@
             }
 
             if (spectatorPlayers.length < 2) {
-                alert('최소 2명 이상의 관전자가 필요합니다!');
+                alert('최소 2명 이상 필요합니다!');
                 return;
             }
 
@@ -2590,21 +2051,22 @@
             
             team1Points = 100;
             team2Points = 100;
-            updateTeamPoints();
             
             const team1Players = getTeamPlayers(1);
             const team2Players = getTeamPlayers(2);
             
             if (team1Players.length > 0) {
-                team1CaptainName = team1Players.sort((a, b) => b.tier - a.tier)[0].name;
+                const captain = team1Players.sort((a, b) => b.tier - a.tier)[0];
+                team1CaptainName = captain.name;
             } else {
-                team1CaptainName = '1팀';
+                team1CaptainName = '';
             }
             
             if (team2Players.length > 0) {
-                team2CaptainName = team2Players.sort((a, b) => b.tier - a.tier)[0].name;
+                const captain = team2Players.sort((a, b) => b.tier - a.tier)[0];
+                team2CaptainName = captain.name;
             } else {
-                team2CaptainName = '2팀';
+                team2CaptainName = '';
             }
             
             showAuctionModal();
@@ -2627,21 +2089,37 @@
 
         function showAuctionModal() {
             if (currentAuctionIndex >= auctionPlayers.length) {
-                alert('모든 선수의 경매가 끝났습니다!');
+                alert('경매 종료!');
                 closeAuction();
                 return;
             }
 
             const player = auctionPlayers[currentAuctionIndex];
             
+            const roleIcons = {
+                '탱커': '🛡️',
+                '딜러': '⚔️',
+                '힐러': '❤️',
+                '랜덤': '🎲'
+            };
+            
             document.getElementById('auctionPlayerName').textContent = player.name;
-            document.getElementById('auctionPlayerTier').textContent = `${player.tier}점`;
-            document.getElementById('auctionPlayerRole').textContent = `${ROLE_ICONS[player.role]} ${player.role}`;
+            document.getElementById('auctionPlayerTier').textContent = `티어: ${player.tier} | ${roleIcons[player.role] || '🎲'} ${player.role || '랜덤'}`;
             
-            document.getElementById('modalTeam1Captain').textContent = team1CaptainName;
-            document.getElementById('modalTeam2Captain').textContent = team2CaptainName;
+            const team1Players = getTeamPlayers(1);
+            const team2Players = getTeamPlayers(2);
             
-            updateAuctionTeamInfo();
+            document.getElementById('auctionTeam1Name').textContent = team1CaptainName ? `1팀 (${team1CaptainName})` : '1팀';
+            document.getElementById('auctionTeam2Name').textContent = team2CaptainName ? `2팀 (${team2CaptainName})` : '2팀';
+            
+            document.getElementById('auctionTeam1Captain').textContent = `팀장: ${team1CaptainName || '-'}`;
+            document.getElementById('auctionTeam2Captain').textContent = `팀장: ${team2CaptainName || '-'}`;
+            
+            const team1MembersList = team1Players.map(p => `${p.name}(${p.tier})`).join(', ');
+            const team2MembersList = team2Players.map(p => `${p.name}(${p.tier})`).join(', ');
+            
+            document.getElementById('auctionTeam1Members').textContent = team1Players.length > 0 ? team1MembersList : '구성원 없음';
+            document.getElementById('auctionTeam2Members').textContent = team2Players.length > 0 ? team2MembersList : '구성원 없음';
             
             document.getElementById('auctionTeam1PointsInput').value = team1Points;
             document.getElementById('auctionTeam2PointsInput').value = team2Points;
@@ -2651,37 +2129,26 @@
             
             document.getElementById('team1BidInput').value = '';
             document.getElementById('team2BidInput').value = '';
+            document.getElementById('team1BidInput').max = team1Points;
+            document.getElementById('team2BidInput').max = team2Points;
+            
             currentBid = { team: null, amount: 0 };
-            updateCurrentBid();
             
             document.getElementById('team1BidBtn').disabled = team1Points === 0;
             document.getElementById('team2BidBtn').disabled = team2Points === 0;
             
-            document.getElementById('auctionResultInfo').style.display = 'none';
+            document.getElementById('auctionTeam1Side').classList.remove('winner');
+            document.getElementById('auctionTeam2Side').classList.remove('winner');
             
             document.getElementById('auctionModal').classList.add('active');
 
             startAuctionTimer();
 
             setTimeout(() => {
-                document.getElementById('team1BidInput').focus();
+                const firstInput = document.getElementById('team1BidInput');
+                firstInput.focus();
+                firstInput.select();
             }, 100);
-        }
-
-        function updateAuctionTeamInfo() {
-            const team1Players = getTeamPlayers(1);
-            const team2Players = getTeamPlayers(2);
-            
-            document.getElementById('auctionTeam1Captain').textContent = `팀장: ${team1CaptainName}`;
-            document.getElementById('auctionTeam2Captain').textContent = `팀장: ${team2CaptainName}`;
-            
-            const team1MembersList = team1Players.map(p => `${p.name}(${p.tier})`).join(', ');
-            const team2MembersList = team2Players.map(p => `${p.name}(${p.tier})`).join(', ');
-            
-            document.getElementById('auctionTeam1MembersList').textContent = 
-                team1Players.length > 0 ? `구성원: ${team1MembersList}` : '구성원: 없음';
-            document.getElementById('auctionTeam2MembersList').textContent = 
-                team2Players.length > 0 ? `구성원: ${team2MembersList}` : '구성원: 없음';
         }
 
         function placeBid(team) {
@@ -2695,7 +2162,7 @@
             }
             
             if (bidAmount > teamPoints) {
-                alert('보유 포인트보다 높게 입찰할 수 없습니다!');
+                alert('보유 포인트를 초과했습니다!');
                 return;
             }
             
@@ -2705,7 +2172,6 @@
             }
             
             currentBid = { team, amount: bidAmount };
-            updateCurrentBid();
             
             resetAuctionTimer();
             
@@ -2715,30 +2181,9 @@
             oppositeInput.select();
         }
 
-        function updateCurrentBid() {
-            const bidElement = document.getElementById('auctionCurrentBid');
-            
-            document.getElementById('auctionTeam1').classList.remove('last-bid');
-            document.getElementById('auctionTeam2').classList.remove('last-bid');
-            
-            if (currentBid.team === null) {
-                bidElement.innerHTML = '현재 입찰가: <span class="auction-winner">없음</span>';
-            } else {
-                const teamName = currentBid.team === 1 ? '1팀' : '2팀';
-                const captainName = currentBid.team === 1 ? team1CaptainName : team2CaptainName;
-                bidElement.innerHTML = `현재 입찰가: <span class="auction-winner">${teamName}(${captainName}) - ${currentBid.amount}P</span>`;
-                
-                if (currentBid.team === 1) {
-                    document.getElementById('auctionTeam1').classList.add('last-bid');
-                } else {
-                    document.getElementById('auctionTeam2').classList.add('last-bid');
-                }
-            }
-        }
-
         function passAuction() {
             if (currentBid.team !== null) {
-                alert('이미 입찰이 있습니다. 유찰할 수 없습니다.');
+                alert('이미 입찰이 있습니다!');
                 return;
             }
             
@@ -2752,7 +2197,7 @@
                 currentBid = { team: null, amount: 0 };
                 showAuctionModal();
             } else {
-                alert('모든 선수의 경매가 끝났습니다!');
+                alert('경매 종료!');
                 closeAuction();
             }
         }
@@ -2764,7 +2209,7 @@
                 } else if (team2Points === 0 && team1Points > 0) {
                     currentBid = { team: 1, amount: 0 };
                 } else {
-                    alert('아직 입찰이 없습니다!');
+                    alert('입찰이 없습니다!');
                     return;
                 }
             }
@@ -2775,15 +2220,11 @@
             
             if (team === 1) {
                 team1Points -= amount;
+                document.getElementById('auctionTeam1Side').classList.add('winner');
             } else {
                 team2Points -= amount;
+                document.getElementById('auctionTeam2Side').classList.add('winner');
             }
-            updateTeamPoints();
-            
-            const resultTeam = team === 1 ? `1팀 (${team1CaptainName})` : `2팀 (${team2CaptainName})`;
-            document.getElementById('auctionResultTeam').textContent = `${resultTeam} 낙찰!`;
-            document.getElementById('auctionResultPrice').textContent = `낙찰가: ${amount}P`;
-            document.getElementById('auctionResultInfo').style.display = 'block';
             
             addPlayerToTeam(player, team);
             removeFromSpectators(player);
@@ -2802,10 +2243,10 @@
                     }
                 } else {
                     stopAuctionTimer();
-                    alert('🎉 경매가 종료되었습니다!');
+                    alert('🎉 경매 종료!');
                     closeAuction();
                 }
-            }, 1500);
+            }, 1000);
         }
 
         function autoAssignRemaining() {
@@ -2817,7 +2258,7 @@
                 removeFromSpectators(player);
             });
             
-            alert(`🎉 경매가 종료되었습니다! 남은 선수는 ${targetTeam}팀에 자동 배정되었습니다.`);
+            alert(`🎉 경매 종료! 남은 선수는 ${targetTeam}팀에 배정되었습니다.`);
             closeAuction();
         }
 
@@ -2836,19 +2277,36 @@
                 }
             }
             
+            const team1Players = getTeamPlayers(1);
+            const team2Players = getTeamPlayers(2);
+            
+            if (team === 1 && team1Players.length > 0 && !team1CaptainName) {
+                const captain = team1Players.sort((a, b) => b.tier - a.tier)[0];
+                team1CaptainName = captain.name;
+            }
+            
+            if (team === 2 && team2Players.length > 0 && !team2CaptainName) {
+                const captain = team2Players.sort((a, b) => b.tier - a.tier)[0];
+                team2CaptainName = captain.name;
+            }
+            
+            const team1MembersList = team1Players.map(p => `${p.name}(${p.tier})`).join(', ');
+            const team2MembersList = team2Players.map(p => `${p.name}(${p.tier})`).join(', ');
+            
+            document.getElementById('auctionTeam1Members').textContent = team1Players.length > 0 ? team1MembersList : '구성원 없음';
+            document.getElementById('auctionTeam2Members').textContent = team2Players.length > 0 ? team2MembersList : '구성원 없음';
+            
+            document.getElementById('auctionTeam1Captain').textContent = `팀장: ${team1CaptainName || '-'}`;
+            document.getElementById('auctionTeam2Captain').textContent = `팀장: ${team2CaptainName || '-'}`;
+            
             updateTeamScores();
             updateSavedPlayersUI();
             updateSidebarLists();
-            updateAuctionTeamInfo();
         }
 
         function closeAuction() {
             stopAuctionTimer();
-            
             document.getElementById('auctionModal').classList.remove('active');
-            
-            document.getElementById('auctionTeam1').classList.remove('last-bid');
-            document.getElementById('auctionTeam2').classList.remove('last-bid');
         }
 
         function assignPlayersToTeams(players, teamSize) {
@@ -2896,7 +2354,6 @@
             
             team1Points = 100;
             team2Points = 100;
-            updateTeamPoints();
             
             updateSpectatorCount();
             updateSavedPlayersUI();
